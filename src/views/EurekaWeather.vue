@@ -7,7 +7,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col md="3">
+      <v-col md="6">
         <pagos-weather-alarm>
         </pagos-weather-alarm>
       </v-col>

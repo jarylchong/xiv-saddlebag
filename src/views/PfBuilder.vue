@@ -13,11 +13,10 @@
     </v-alert>
     <v-row>
       <v-col>
-        <v-btn-toggle v-model="currentRaidSeriesKey">
+        <v-btn-toggle>
           <v-btn
             v-for="r in raidSeriesKeys"
             :key="r.title"
-            :value="r.title"
             link
             @click="setRaidSeries(r)"
           >
@@ -27,7 +26,7 @@
       </v-col>
     </v-row>
     <v-divider class="mt-3"></v-divider>
-    <v-row>
+    <v-row v-if="raidSeries && raidSeries[currentRaidSeriesKey]">
       <v-col cols="2">
         <v-list dense>
           <v-subheader>Tiers</v-subheader>

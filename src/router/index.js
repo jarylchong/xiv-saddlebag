@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import EurekaWeather from '../views/EurekaWeather'
 import PfBuilder from '../views/PfBuilder'
+import DevLogs from '../views/DevLogs'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/pf-builder',
     name: 'PF Builder',
     component: PfBuilder
+  },
+  {
+    path: '/dev-logs',
+    name: 'Dev Logs',
+    component: DevLogs
   }
 ]
 

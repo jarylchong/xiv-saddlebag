@@ -26,7 +26,7 @@
 
 <script>
   export default {
-    name: 'DevTodo',
+    name: 'DevLogs',
 
     components: {
     },
@@ -37,7 +37,21 @@
           "Add store",
           "Move PagosWeatherAlarm to floating absolute element, activated by store value",
           "Maybe deprecate EurekaWeather view and have the alarm toggle somewhere else?",
+          "Add current weather to eureka weather, track when last/next fogblizz",
           "Add extremes to pf builder?",
+          "savage loot manager",
+          "integrate dalamud waymark plugin?",
+          "discord time converter"
+        ],
+        changelog: [
+          {
+            ver: "1.6_1.0",
+            changes: [
+              "Initial version",
+              "Imported and spruced up Pagos weather alarm",
+              "Created initial version of PF builder with P1 and P2"
+            ]
+          }
         ]
       }
     }
