@@ -50,7 +50,19 @@
               "Initial version",
               "Imported and spruced up Pagos weather alarm",
               "Created initial version of PF builder with P1 and P2"
-            ]
+            ],
+            date: "2022-04-22"
+          },
+          {
+            ver: "1.6_1.1",
+            changes: [
+              "Added P3+4 raid definitions",
+              "Added formatting to all P1-4 raids",
+              "Added ability to disable mechanics in builder",
+              "Refactored DevTodo to DevLogs, added changelog",
+              "Minor styling/functional fixes"
+            ],
+            date: "2022-04-28"
           }
         ]
       }
