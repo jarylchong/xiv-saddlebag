@@ -119,7 +119,7 @@ export default [
           { text: "1/4 NE, 2/3 SW", value: "1/4 NE … 2/3 SW" },
           { text: "1/4 NW, 2/3 SE", value: "1/4 NW … 2/3 SE" },
         ],
-        default: "1+3→ NE ╱ 2+4→ SW",
+        default: "1/3 NE … 2/4 SW",
         enabled: true
       },
       {
@@ -130,7 +130,7 @@ export default [
           { text: "TR South, HM North", value: "TR-S, HM-N" },
           { text: "TR North, HM South", value: "TR-N, HM-S" },
         ],
-        default: "TR South, HM North",
+        default: "TR-S, HM-N",
         enabled: true
       },
       {
@@ -230,7 +230,7 @@ export default [
           { text: "Pastebin strats", value: "pastebin strats" },
           { text: "Maxwell", value: "Maxwell" },
         ],
-        default: "Pastebin strats",
+        default: "pastebin strats",
         hint: "Both strats are the same, just different names",
         enabled: true
       },
