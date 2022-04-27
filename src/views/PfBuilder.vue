@@ -59,19 +59,26 @@
               :value="descriptionResult"
               prepend-icon="mdi-content-copy"
               @click:prepend="copyDescription"
+              @click="copyDescription"
             ></v-text-field>
           </v-col>
         </v-row>
 
         <v-row>
           <v-col cols="12">
-            Loot Options
+            <h3>Loot Options</h3>
           </v-col>
-          <v-col>
+          <v-col cols="1" class="mr-0 pr-0">
+            <v-switch v-model="lootEnabled" class="float-right"></v-switch>
+          </v-col>
+          <v-col cols="11">
             <v-select
               :items="lootOptions"
+              item-text="text"
+              item-value="value"
               label="Chests"
               v-model="chests"
+              :disabled="!lootEnabled"
               outlined
             ></v-select>
           </v-col>
@@ -79,23 +86,44 @@
 
         <v-row>
           <v-col cols="12">
-            Mechanic Options
+            <h3>Mechanic Options</h3>
           </v-col>
           <v-col
             v-for="mech in currentRaid.mechanics"
             :key="mech.key"
+            cols="4"
           >
-            <v-select
-              :items="mech.options"
-              :label="mech.name"
-              v-model="chosenStrats[mech.key]"
-              outlined
-            ></v-select>
+            <v-row>
+              <v-col cols="2" class="mr-0 pr-0">
+                <v-switch v-model="mech.enabled" class="float-right"></v-switch>
+              </v-col>
+              <v-col cols="10">
+                <v-select
+                  :items="mech.options"
+                  :item-text="mech.text"
+                  item-value="mech"
+                  return-object
+                  :label="mech.name"
+                  v-model="chosenStrats[mech.key]"
+                  :disabled="!mech.enabled"
+                  :hint="mech.hint"
+                  persistent-hint
+                  outlined
+                >
+                </v-select>
+              </v-col>
+            </v-row>
           </v-col>
           <v-col cols="12">
             <v-checkbox
-              v-model="superModdedOctanonagon"
-              label="Super Modded Octanonagon"
+              v-model="verboseMode"
+              label="Verbose mode"
+              @change="hackyRecompute = !hackyRecompute"
+            >
+            </v-checkbox>
+            <v-checkbox
+              v-model="superModdedOctanonagonTriangle"
+              label="Super Modded Octanonagon Triangle"
             >
             </v-checkbox>
           </v-col>
@@ -130,24 +158,27 @@ import pandaTierOne from '@/assets/pandaTierOne'
         ],
         currentRaidSeriesKey: "panda",
         lootOptions: [
-          { text: "2 chest", value: "2 chest" },
-          { text: "1 chest", value: "1 chest" },
-          { text: "0-1 chest", value: "0-1 chest" },
-          { text: "Page run", value: "Page run" },
-          { text: "Any chest", value: "Any chest" }
+          { text: "2 chest", value: "  chest" },
+          { text: "1 chest", value: "  chest" },
+          { text: "0-1 chest", value: " - chest" },
+          { text: "Page run", value: " Page run" },
+          { text: "Any chest", value: " Any chest" }
         ],
         currentRaid: {},
         chosenStrats: {},
-        chests: "2 chest",
-        superModdedOctanonagon: false,
-        showCopiedAlert: false
+        chests: "  chest",
+        superModdedOctanonagonTriangle: false,
+        showCopiedAlert: false,
+        lootEnabled: false,
+        hackyRecompute: false
       }
     },
 
     computed: {
       descriptionResult() {
+        this.hackyRecompute
         let result = this.currentRaid && this.currentRaid.pfText ? this.currentRaid.pfText(this.getReadableStrat) : ""
-        return `${this.chests}.   ${result}${this.superModdedOctanonagon ? "[  Super modded octanonagon strat  ]" : ""}`
+        return `${this.lootEnabled ? this.chests + ". " : ""}${result}${this.superModdedOctanonagonTriangle ? "《 Super modded octanonagon triangle strat 》" : ""}`
       }
     },
 
@@ -163,18 +194,28 @@ import pandaTierOne from '@/assets/pandaTierOne'
         this.chosenStrats[mechKey] = val
       },
       getReadableStrat(key) {
+        if (!this.currentRaid || !this.currentRaid.mechanics) return ""
+
+        let readableStrat = ""
+        const mech = this.currentRaid.mechanics.find(m => m.key === key)
+        if(!mech || (mech && !mech.enabled)) return ""
+
+        readableStrat = mech.default
+
         if(this.chosenStrats && this.chosenStrats[key]){
-          return this.chosenStrats[key]
-        } else if (this.currentRaid){
-          return this.currentRaid.mechanics.find(m => m.key === key) ? this.currentRaid.mechanics.find(m => m.key === key).default : ""
+          readableStrat = this.chosenStrats[key].value
         }
-        return ""
+
+        if(readableStrat.length && this.verboseMode){
+          readableStrat = (mech.verbosePrepend ? `${mech.verbosePrepend} ` : "") + readableStrat + (mech.verboseAppend ? ` ${mech.verboseAppend}` : "")
+        }
+        return readableStrat
       },
       copyDescription() {
         navigator.clipboard.writeText(this.descriptionResult).then(() => {
           // success
           this.showCopiedAlert = true
-          setTimeout(() => { this.showCopiedAlert = false }, 3 * 1000)
+          setTimeout(() => { this.showCopiedAlert = false }, 1 * 1000)
         })
       }
     },
