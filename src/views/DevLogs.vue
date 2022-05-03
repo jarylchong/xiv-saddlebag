@@ -3,7 +3,7 @@
   <v-container>
     <v-row>
       <v-col>
-        Dev To-do List
+        <h2>Dev To-do List</h2>
       </v-col>
     </v-row>
     <v-row>
@@ -17,6 +17,39 @@
               <v-list-item-title>{{ item }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+        </v-list>
+      </v-col>
+    </v-row>
+
+    
+    <v-row>
+      <v-col>
+        <h2>Changelog</h2>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-list>
+          <v-list-group
+            v-for="version in changelog"
+            :key="version.ver"
+          >
+            <template v-slot:activator>
+              <v-list-item-title>
+                <h3>{{ version.ver }}</h3>
+              </v-list-item-title>
+              <v-list-item-subtitle>
+                {{ version.date }}
+              </v-list-item-subtitle>
+            </template>
+
+            <v-list-item
+              v-for="change in version.changes"
+              :key="change"
+            >
+              <v-list-item-title>{{ change }}</v-list-item-title>
+            </v-list-item>
+          </v-list-group>
         </v-list>
       </v-col>
     </v-row>
@@ -41,7 +74,8 @@
           "Add extremes to pf builder?",
           "savage loot manager",
           "integrate dalamud waymark plugin?",
-          "discord time converter"
+          "discord time converter",
+          "use first strat option as default instead of tracking diff data member"
         ],
         changelog: [
           {
@@ -63,9 +97,22 @@
               "Minor styling/functional fixes"
             ],
             date: "2022-04-28"
+          },
+          {
+            ver: "1.6_1.2",
+            changes: [
+              "Added Weeklies Tracker",
+            ],
+            date: "2022-05-03"
           }
         ]
       }
+    },
+
+    mounted() {
+      this.changelog.sort((a,b) => {
+        return a.ver < b.ver
+      })
     }
   }
 </script>

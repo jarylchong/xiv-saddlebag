@@ -67,7 +67,8 @@ export default {
   data: () => ({
     navLinks: [
       { title: "Eureka Weather", path: "/eureka-weather", icon: "mdi-weather-snowy-heavy" },
-      { title: "PF Builder", path: "/pf-builder", icon: "mdi-playlist-edit"}
+      { title: "PF Builder", path: "/pf-builder", icon: "mdi-playlist-edit"},
+      { title: "Weeklies Tracker", path: "/weeklies-tracker", icon: "mdi-clipboard-list-outline"}
     ]
   }),
 };
