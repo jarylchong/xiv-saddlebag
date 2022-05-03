@@ -22,7 +22,7 @@
             v-for="weekly in availableWeeklies"
             :key="weekly.shortKey"
             dense
-            v-show="weekliesStatus[weekly.shortKey].v || visibilityMode"
+            v-show="(weekliesStatus[weekly.shortKey] && weekliesStatus[weekly.shortKey].v) || visibilityMode"
           >
             <v-list-item-content v-if="weekliesStatus[weekly.shortKey]">
               <v-checkbox
